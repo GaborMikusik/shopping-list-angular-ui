@@ -123,9 +123,9 @@ export class ShoppingListControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public createShoppingList(body: ShoppingList, observe?: 'body', reportProgress?: boolean): Observable<number>;
-    public createShoppingList(body: ShoppingList, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<number>>;
-    public createShoppingList(body: ShoppingList, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<number>>;
+    public createShoppingList(body: ShoppingList, observe?: 'body', reportProgress?: boolean): Observable<ShoppingList>;
+    public createShoppingList(body: ShoppingList, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ShoppingList>>;
+    public createShoppingList(body: ShoppingList, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ShoppingList>>;
     public createShoppingList(body: ShoppingList, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
 
         if (body === null || body === undefined) {
@@ -133,6 +133,12 @@ export class ShoppingListControllerService {
         }
 
         let headers = this.defaultHeaders;
+
+        const valami = JSON.parse(localStorage.getItem('user')!)
+
+        headers = this.defaultHeaders;
+
+        headers = headers.set('Authorization', `${valami.token}`);
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -152,7 +158,7 @@ export class ShoppingListControllerService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<number>('post', `${this.basePath}/api/shoppinglist/createlist`,
+        return this.httpClient.request<ShoppingList>('post', `${this.basePath}/api/shoppinglist/createlist`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,

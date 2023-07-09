@@ -9,25 +9,22 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar'
 import { MatIconModule } from '@angular/material/icon'
 import { MatListModule } from '@angular/material/list'
-import { MatCardModule } from '@angular/material/card'
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { SigninComponent } from './account/signin/signin.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatRadioModule } from '@angular/material/radio';
-import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialExampleModule } from './material.module';
 import { ApiModule } from './api';
 import { HttpClientModule } from '@angular/common/http';
+import { AddListComponent } from './main/newlist/add-list/add-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainComponent,
+    AddListComponent
   ],
   imports: [
     BrowserModule,

@@ -1,1 +1,17 @@
-<p>add-list works!</p>
+<div class="add-new-list-container">
+    <form [formGroup]="form">
+        <div class="button-container">
+            <mat-form-field appearance="outline">
+                <mat-label>Name</mat-label>
+                <input matInput formControlName="name">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Description</mat-label>
+                <input matInput formControlName="description">
+            </mat-form-field>
+        </div>
+        <button mat-fab extended color="primary" style="width: 200px; align-content: center;" (click)="addNewList()">
+            Add
+        </button>
+    </form>
+</div>
