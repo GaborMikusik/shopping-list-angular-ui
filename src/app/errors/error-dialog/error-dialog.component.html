@@ -1,0 +1,19 @@
+<div class="error-container">
+    <h2>Error Details</h2>
+    <div>
+        <div class="error-item">
+            <span class="error-label highlight">Status:</span>
+            <span class="error-value">{{ data.status }}</span>
+        </div>
+        <div class="error-item">
+            <span class="error-label highlight">Message:</span>
+            <span class="error-value">{{ data.message }}</span>
+        </div>
+        <div class="error-item">
+            <span class="error-label highlight">Errors:</span>
+            <ul class="error-list">
+                <li *ngFor="let error of data.errors">{{ error }}</li>
+            </ul>
+        </div>
+    </div>
+</div>

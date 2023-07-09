@@ -16,6 +16,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SigninComponent } from './account/signin/signin.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MaterialExampleModule } from './material.module';
+import { ApiModule } from './api';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -25,17 +32,13 @@ import { MatSelectModule } from '@angular/material/select';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    MatSidenavModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatListModule,
     FlexLayoutModule,
     BrowserAnimationsModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatToolbarModule,
-    MatIconModule
+    FormsModule,
+    MaterialExampleModule,
+    ReactiveFormsModule,
+    ApiModule,
+    HttpClientModule
   ],
   exports: [
     MatSidenavModule,
@@ -43,8 +46,8 @@ import { MatSelectModule } from '@angular/material/select';
     MatIconModule,
     MatListModule,
     FlexLayoutModule
-  ,
-  MatFormFieldModule,
+    ,
+    MatFormFieldModule,
     MatSelectModule,
     MatToolbarModule,
     MatIconModule

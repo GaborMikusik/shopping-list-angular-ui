@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
 import { AccountService } from '../../service/account.service';
 import { Router } from '@angular/router';
-import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthControllerService } from 'src/app/api';
+import { MatDialog } from '@angular/material/dialog';
+import { ErrorDialogComponent } from 'src/app/errors/error-dialog/error-dialog.component';
 
 @Component({
   selector: 'app-signup',
@@ -15,30 +18,42 @@ export class SignupComponent {
   password: string;
   confirmPassword: string;
 
-  Roles: any = ['Admin', 'Author', 'Reader'];
+  form: FormGroup;
+  emailfield = new FormControl('', [Validators.required, Validators.email]);
+  hide = true;
 
-  registerForm: FormGroup;
-  fieldRequired: string = "This field is required"
+  constructor(private router: Router, public accountService: AccountService, private authContorollerService: AuthControllerService, private fb: FormBuilder, private dialog: MatDialog) { }
 
   ngOnInit() {
-    this.createForm();
+    this.form = this.fb.group({
+      name: ['', Validators.required],
+      username: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required],
+      confirmPassword: ['', Validators.required]
+    });
   }
-
-  constructor(private fb: FormBuilder, private router: Router, private accountService: AccountService) { }
 
   signUp() {
     const user = {
-      name: 'testName',
-      username: 'testUsername',
-      email: 'test@test.com',
-      password: 'password'
-    };
-    this.accountService.signup(user).subscribe(data => {
-      console.log(data)
+      name: this.form.value.name,
+      username: this.form.value.username,
+      email: this.form.value.email,
+      password: this.form.value.password
+    }
+    console.log(user)
+    this.authContorollerService.registerUser(user).subscribe(data => {
       if (data.success === true) {
-        localStorage.setItem('user', JSON.stringify(user));
         this.router.navigate(['/account/signin']);
       }
+    }, (error: any) => {
+      this.dialog.open(ErrorDialogComponent, {
+        data: {
+          status: error.error.status,
+          message: error.error.message,
+          errors: error.error.errors
+        },
+      });
     })
   }
 
@@ -46,46 +61,12 @@ export class SignupComponent {
     this.router.navigate(['/account/signin']);
   }
 
-  createForm() {
-    let emailRegex: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-    this.registerForm = this.fb.group({
-      'username': [null, Validators.required],
-      'email': [null, [Validators.required, Validators.pattern(emailRegex)]],
-      'password': [null, [Validators.required, this.checkPassword]],
-    });
-  }
-
-  getErrorMessage(field: string) {
-    const formControl = this.registerForm.get(field);
-    if (formControl!.hasError('required')) {
-      return 'This field is required';
-    } else if (formControl!.hasError('pattern')) {
-      return 'Not a valid email address';
-    } else if (formControl!.hasError('requirements')) {
-      return 'Password needs to be at least six characters, one uppercase letter, and one number';
-    } else {
-      return '';
-    }
-  }
-
-  checkPassword(control: FormControl) {
-    const enteredPassword = control.value;
-    const passwordCheck = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{6,})/;
-    return (!passwordCheck.test(enteredPassword) && enteredPassword) ? { 'requirements': true } : null;
-  }
-
-  onSubmit() {
-    if (this.registerForm.invalid) {
-      return;
+  getErrorMessage() {
+    if (this.emailfield.hasError('required')) {
+      return 'You must enter a value';
     }
 
-    const email = this.registerForm.value.email;
-    const password = this.registerForm.value.password;
-    const username = this.registerForm.value.username;
-
-    //this.auth!.registerUser(email, password, username);
-
-    this.registerForm.reset();
+    return this.emailfield.hasError('email') ? 'Not a valid email' : '';
   }
+
 }

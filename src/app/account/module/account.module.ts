@@ -5,11 +5,10 @@ import { LayoutComponent } from 'src/app/common/layout/layout.component';
 import { AccountRoutingModule } from './account-routing.module';
 import { SigninComponent } from '../signin/signin.component';
 import { SignupComponent } from '../signup/signup.component';
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
+import { MaterialExampleModule } from 'src/app/material.module';
+import { ApiModule } from 'src/app/api';
+import { ErrorDialogComponent } from 'src/app/errors/error-dialog/error-dialog.component';
 
 @NgModule({
   imports: [
@@ -17,11 +16,20 @@ import { MatIconModule } from '@angular/material/icon';
     ReactiveFormsModule,
     AccountRoutingModule,
     FormsModule,
+    MaterialExampleModule,
+  ],
+  exports: [
+    CommonModule,
+    ReactiveFormsModule,
+    AccountRoutingModule,
+    FormsModule,
+    MatIconModule,
   ],
   declarations: [
     LayoutComponent,
     SigninComponent,
-    SignupComponent
+    SignupComponent,
+    ErrorDialogComponent
   ]
 })
 export class AccountModule { }

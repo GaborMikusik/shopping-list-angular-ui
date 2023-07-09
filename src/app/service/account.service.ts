@@ -7,46 +7,24 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class AccountService {
-  private showButtonsSubject = new BehaviorSubject<User | null>(JSON.parse(localStorage.getItem('user')!));
-  public showButtons$: Observable<User | null> = this.showButtonsSubject.asObservable();
+  private showShoppingListManagementSubject = new BehaviorSubject<User | null>(JSON.parse(localStorage.getItem('user')!));
+  public showShoppingListManagement$: Observable<User | null> = this.showShoppingListManagementSubject.asObservable();
 
   constructor(private router: Router) { }
 
   public get userValue() {
-    return this.showButtonsSubject.value;
+    return this.showShoppingListManagementSubject.value;
   }
 
-
-  toggleButtons(user: User) {
-    this.showButtonsSubject.next(user);
-  }
-
-  signup(user: User) {
-    return new Observable<SignupResponse>(observer => {
-      observer.next({
-        success: true,
-        message: 'User successfuly created'
-      })
-      observer.complete()
-    })
-  }
-
-  signin(usernameOrEmail: string, password: string) {
-    return new Observable<JwtAuthenticationResponse>(observer => {
-      observer.next({
-        accessToken: 'jwtToken',
-        tokenType: 'Bearer'
-      })
-      observer.complete()
-    })
+  showManagement(user: User) {
+    this.showShoppingListManagementSubject.next(user);
   }
 
   logout() {
     localStorage.removeItem('user');
-    this.showButtonsSubject.next(null);
+    this.showShoppingListManagementSubject.next(null);
     this.router.navigate(['/account/signin']);
   }
-
 }
 
 class SignupResponse {

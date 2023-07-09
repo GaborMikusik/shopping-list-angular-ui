@@ -12,5 +12,4 @@ export class LayoutComponent {
       this.router.navigate(['/']);
     }
   }
-
 }

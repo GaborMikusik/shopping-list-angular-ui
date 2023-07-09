@@ -1,21 +1,35 @@
-<p>main works!</p>
-<h4>Basic mat-select</h4>
-<mat-form-field appearance="fill">
-  <mat-label>Favorite food</mat-label>
-  <mat-select>
-    <mat-option *ngFor="let food of foods" [value]="food.value">
-      {{food.viewValue}}
-    </mat-option>
-  </mat-select>
-</mat-form-field>
-
-<h4>Basic native select</h4>
-<mat-form-field appearance="fill">
-  <mat-label>Cars</mat-label>
-  <select matNativeControl required>
-    <option value="volvo">Volvo</option>
-    <option value="saab">Saab</option>
-    <option value="mercedes">Mercedes</option>
-    <option value="audi">Audi</option>
-  </select>
-</mat-form-field>
+<mat-grid-list cols="4">
+    <mat-grid-tile *ngFor="let item of items">
+        <mat-card class="card">
+            <mat-card-header class="card-header card">
+                <mat-card-title>{{ item.name }}</mat-card-title>
+                <mat-card-subtitle class="card-header-subtitle">{{ item.description }}</mat-card-subtitle>
+                <!-- <p>{{ item.description }}</p> -->
+            </mat-card-header>
+            <mat-card-content class="scrollable-content">
+                <div></div>
+                <mat-expansion-panel class="expansion-panel">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Groceries
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <mat-list role="list" *ngFor="let x of item.items">
+                        <mat-list-item role="listitem">{{ x.name }}</mat-list-item>
+                    </mat-list>
+                    <mat-form-field class="example-form-field" appearance="outline">
+                        <mat-label>Enter item name</mat-label>
+                        <input matInput type="text" [(ngModel)]="itemName">
+                        <button *ngIf="itemName" matSuffix mat-icon-button aria-label="Clear"
+                            (click)="addNewItem(item)">
+                            <mat-icon>add</mat-icon>
+                        </button>
+                    </mat-form-field>
+                </mat-expansion-panel>
+            </mat-card-content>
+            <mat-card-footer>
+                <mat-hint class="footer">Updated: {{ item.updatedAt }}</mat-hint>
+            </mat-card-footer>
+        </mat-card>
+    </mat-grid-tile>
+</mat-grid-list>
