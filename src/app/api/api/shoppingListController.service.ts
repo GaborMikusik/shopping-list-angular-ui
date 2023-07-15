@@ -81,11 +81,7 @@ export class ShoppingListControllerService {
 
         let headers = this.defaultHeaders;
 
-        const valami = JSON.parse(localStorage.getItem('user')!)
-
-        headers = this.defaultHeaders;
-
-        headers = headers.set('Authorization', `${valami.token}`);
+        headers = this.setJwtToken(headers);
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -134,11 +130,7 @@ export class ShoppingListControllerService {
 
         let headers = this.defaultHeaders;
 
-        const valami = JSON.parse(localStorage.getItem('user')!)
-
-        headers = this.defaultHeaders;
-
-        headers = headers.set('Authorization', `${valami.token}`);
+        headers = this.setJwtToken(headers);
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -187,11 +179,7 @@ export class ShoppingListControllerService {
 
         let headers = this.defaultHeaders;
 
-        const valami = JSON.parse(localStorage.getItem('user')!)
-
-        headers = this.defaultHeaders;
-
-        headers = headers.set('Authorization', `${valami.token}`);
+        headers = this.setJwtToken(headers);
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -267,13 +255,9 @@ export class ShoppingListControllerService {
     public getActualShoppingLists(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<ShoppingList>>>;
     public getActualShoppingLists(observe: any = 'body', reportProgress: boolean = false): Observable<any> {
 
-        const jwt = localStorage.getItem('user');
-
-        const valami = JSON.parse(localStorage.getItem('user')!)
-
         let headers = this.defaultHeaders;
 
-        headers = headers.set('Authorization', `${valami.token}`);
+        headers = this.setJwtToken(headers);
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -309,14 +293,9 @@ export class ShoppingListControllerService {
     public getAlreadyPaidShoppingLists(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<ShoppingList>>>;
     public getAlreadyPaidShoppingLists(observe: any = 'body', reportProgress: boolean = false): Observable<any> {
 
-        const jwt = localStorage.getItem('user');
-
-        const valami = JSON.parse(localStorage.getItem('user')!)
-
         let headers = this.defaultHeaders;
 
-        headers = headers.set('Authorization', `${valami.token}`);
-
+        headers = this.setJwtToken(headers);
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -359,6 +338,8 @@ export class ShoppingListControllerService {
 
         let headers = this.defaultHeaders;
 
+        headers = this.setJwtToken(headers);
+
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -393,13 +374,9 @@ export class ShoppingListControllerService {
     public getShoppingLists(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<ShoppingList>>>;
     public getShoppingLists(observe: any = 'body', reportProgress: boolean = false): Observable<any> {
 
-        const jwt = localStorage.getItem('user');
-
-        const valami = JSON.parse(localStorage.getItem('user')!)
-
         let headers = this.defaultHeaders;
 
-        headers = headers.set('Authorization', `${valami.token}`);
+        headers = this.setJwtToken(headers);
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -436,12 +413,9 @@ export class ShoppingListControllerService {
     public markItemsAsPurchased(body?: Array<number>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Item>>>;
     public markItemsAsPurchased(body?: Array<number>, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
 
-
-        const valami = JSON.parse(localStorage.getItem('user')!)
-
         let headers = this.defaultHeaders;
 
-        headers = headers.set('Authorization', `${valami.token}`);
+        headers = this.setJwtToken(headers);
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -500,6 +474,8 @@ export class ShoppingListControllerService {
 
         let headers = this.defaultHeaders;
 
+        headers = this.setJwtToken(headers);
+
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -540,12 +516,9 @@ export class ShoppingListControllerService {
             throw new Error('Required parameter body was null or undefined when calling updateShoppingList.');
         }
 
-        const valami = JSON.parse(localStorage.getItem('user')!)
-
         let headers = this.defaultHeaders;
 
-        headers = headers.set('Authorization', `${valami.token}`);
-
+        headers = this.setJwtToken(headers);
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -592,12 +565,9 @@ export class ShoppingListControllerService {
             throw new Error('Required parameter id was null or undefined when calling updateShoppingList1.');
         }
 
-        const valami = JSON.parse(localStorage.getItem('user')!)
-
         let headers = this.defaultHeaders;
 
-        headers = headers.set('Authorization', `${valami.token}`);
-
+        headers = this.setJwtToken(headers);
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -621,5 +591,11 @@ export class ShoppingListControllerService {
             }
         );
     }
+
+    private setJwtToken(headers: HttpHeaders) {
+        const jwt = JSON.parse(localStorage.getItem('user')!);
+        return headers.set('Authorization', `${jwt.token}`);
+    }
+
 
 }
