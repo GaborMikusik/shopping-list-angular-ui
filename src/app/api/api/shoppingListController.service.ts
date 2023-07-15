@@ -222,6 +222,8 @@ export class ShoppingListControllerService {
 
         let headers = this.defaultHeaders;
 
+        headers = this.setJwtToken(headers);
+
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
         ];

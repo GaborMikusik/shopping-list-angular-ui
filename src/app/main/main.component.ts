@@ -99,8 +99,14 @@ export class MainComponent {
   }
 
   deleteItem(list: ShoppingList, item: Item) {
-    this.service.deleteItem(item.id!).subscribe(data => {
+    this.service.deleteItem(item.id!).subscribe(() => {
       list.items = list.items!.filter(_item => _item !== item);
+    })
+  }
+
+  deleteList(list: ShoppingList) {
+    this.service.deleteShoppingList(list.id!).subscribe(() => {
+      this.lists = this.lists.filter(_list => _list !== list);
     })
   }
 }
