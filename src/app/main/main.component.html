@@ -2,7 +2,8 @@
     <mat-grid-tile *ngFor="let item of lists">
         <mat-card class="card">
             <mat-card-header class="card-header card card-header-container">
-                <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu"
+                    *ngIf="!item.paid">
                     <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu">
@@ -10,7 +11,8 @@
                         <mat-icon>cloud_upload</mat-icon>
                         <span>Save</span>
                     </button>
-                    <button mat-menu-item #tooltip="matTooltip" matTooltip="Mark list as paid." matTooltipPosition="right" (click)="markListAsPaid(item)">
+                    <button mat-menu-item #tooltip="matTooltip" matTooltip="Mark list as paid."
+                        matTooltipPosition="right" (click)="markListAsPaid(item)">
                         <mat-icon>done</mat-icon>
                         <span>Done</span>
                     </button>
@@ -37,7 +39,12 @@
                                     <span #tooltip="matTooltip" matTooltip="{{ x.name }}"
                                         matTooltipPosition="above">{{x.name }}</span>
                                 </div>
-                                <div class="details-container">
+                                <div class="details-container" *ngIf="item.paid">
+                                    <div class="quantity">
+                                        <p>{{ x.quantity }}</p>
+                                    </div>
+                                </div>
+                                <div class="details-container" *ngIf="!item.paid">
                                     <div class="quantity">
                                         <button mat-icon-button (click)="decrementQuantity(x)">
                                             <mat-icon>remove</mat-icon>
