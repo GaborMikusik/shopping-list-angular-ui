@@ -9,6 +9,7 @@
     min-width: 300px;
     height: 100px;
     margin: 5px;
+    width: 500px;
 }
 
 .expansion-panel {
@@ -18,7 +19,6 @@
 
 .card {
     border-radius: 5px;
-    max-width: 400px;
 }
 
 .card-header {
@@ -32,11 +32,55 @@
     color: #fff;
 }
 
+.card-header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .scrollable-content {
     max-height: 300px;
     overflow: auto;
 }
 
-Apply the .footer {
+.footer {
     margin: 10px;
+}
+
+.list-item-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 450px;
+}
+
+.example-form-field {
+    width: 350px;
+}
+
+.name-container {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.details-container {
+    display: flex;
+    align-items: center;
+}
+
+.quantity {
+    margin-right: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.quantity p {
+    margin: 0;
+    /* Remove default margins for <p> element */
+}
+
+.quantity-input {
+    width: 30px;
 }

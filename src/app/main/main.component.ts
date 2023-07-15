@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { ShoppingList, ShoppingListControllerService } from '../api';
+import { Item, ShoppingList, ShoppingListControllerService } from '../api';
 import { NavigationButtonService } from '../service/navigation-button.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ErrorDialogComponent } from '../errors/error-dialog/error-dialog.component';
 import { AddListComponent } from './newlist/add-list/add-list.component';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-main',
@@ -13,12 +14,12 @@ import { AddListComponent } from './newlist/add-list/add-list.component';
 export class MainComponent {
   dialogRef: MatDialogRef<AddListComponent>;
   itemName: string;
-  items: ShoppingList[] = [];
+  lists: ShoppingList[] = [];
 
   constructor(private service: ShoppingListControllerService, private navigationService: NavigationButtonService, private dialog: MatDialog) {
     this.service.getShoppingLists().subscribe(data => {
       for (let i = 0; i < data.length; i++) {
-        this.items.push(data[i])
+        this.lists.push(data[i])
         console.log(data[i]);
       }
     })
@@ -51,9 +52,9 @@ export class MainComponent {
     if (buttonName === 'actualLists') {
       console.log('actualLists');
       this.service.getActualShoppingLists().subscribe(data => {
-        this.items = []
+        this.lists = []
         for (let i = 0; i < data.length; i++) {
-          this.items.push(data[i])
+          this.lists.push(data[i])
           console.log(data[i]);
         }
       })
@@ -62,9 +63,9 @@ export class MainComponent {
 
     if (buttonName === 'history') {
       this.service.getAlreadyPaidShoppingLists().subscribe(data => {
-        this.items = []
+        this.lists = []
         for (let i = 0; i < data.length; i++) {
-          this.items.push(data[i])
+          this.lists.push(data[i])
           console.log(data[i]);
         }
       })
@@ -75,12 +76,31 @@ export class MainComponent {
       console.log('Button clicked: newList')
       this.dialogRef = this.dialog.open(AddListComponent, {});
       this.dialogRef.afterClosed().subscribe((result: ShoppingList) => {
-        this.items.push(result)
-        // Handle the API response from the dialog
-        console.log('Dialog result:', result);
-        // Perform further actions based on the result
+        this.lists.push(result)
       });
       return
     }
+  }
+
+  saveList(list: ShoppingList) {
+    this.service.updateShoppingList(list).subscribe(data => {
+      list = data;
+    });
+  }
+
+  incrementQuantity(item: any) {
+    item.quantity++;
+  }
+
+  decrementQuantity(item: any) {
+    if (item.quantity > 0) {
+      item.quantity--;
+    }
+  }
+
+  deleteItem(list: ShoppingList, item: Item) {
+    this.service.deleteItem(item.id!).subscribe(data => {
+      list.items = list.items!.filter(_item => _item !== item);
+    })
   }
 }

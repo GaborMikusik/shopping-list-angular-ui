@@ -1,10 +1,22 @@
-<mat-grid-list cols="4">
-    <mat-grid-tile *ngFor="let item of items">
+<mat-grid-list cols="3">
+    <mat-grid-tile *ngFor="let item of lists">
         <mat-card class="card">
-            <mat-card-header class="card-header card">
+            <mat-card-header class="card-header card card-header-container">
+                <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="saveList(item)">
+                        <mat-icon>cloud_upload</mat-icon>
+                        <span>Save</span>
+                    </button>
+                    <button mat-menu-item #tooltip="matTooltip" matTooltip="Mark list as done." matTooltipPosition="right">
+                        <mat-icon>done</mat-icon>
+                        <span>Done</span>
+                    </button>
+                </mat-menu>
                 <mat-card-title>{{ item.name }}</mat-card-title>
                 <mat-card-subtitle class="card-header-subtitle">{{ item.description }}</mat-card-subtitle>
-                <!-- <p>{{ item.description }}</p> -->
             </mat-card-header>
             <mat-card-content class="scrollable-content">
                 <div></div>
@@ -15,7 +27,32 @@
                         </mat-panel-title>
                     </mat-expansion-panel-header>
                     <mat-list role="list" *ngFor="let x of item.items">
-                        <mat-list-item role="listitem">{{ x.name }}</mat-list-item>
+                        <mat-list-item role="listitem">
+                            <div class="list-item-container">
+                                <div class="name-container">
+                                    <span #tooltip="matTooltip" matTooltip="{{ x.name }}"
+                                        matTooltipPosition="above">{{x.name }}</span>
+                                </div>
+                                <div class="details-container">
+                                    <div class="quantity">
+                                        <button mat-icon-button (click)="decrementQuantity(x)">
+                                            <mat-icon>remove</mat-icon>
+                                        </button>
+                                        <p>{{ x.quantity }}</p>
+                                        <button mat-icon-button (click)="incrementQuantity(x)">
+                                            <mat-icon>add</mat-icon>
+                                        </button>
+                                    </div>
+                                    <div class="checkbox-container">
+                                        <mat-checkbox [(ngModel)]="x.purchased"></mat-checkbox>
+                                    </div>
+                                    <div><button mat-icon-button (click)="deleteItem(item, x)">
+                                            <mat-icon>delete</mat-icon>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-list-item>
                     </mat-list>
                     <mat-form-field class="example-form-field" appearance="outline">
                         <mat-label>Enter item name</mat-label>

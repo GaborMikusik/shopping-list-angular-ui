@@ -187,6 +187,12 @@ export class ShoppingListControllerService {
 
         let headers = this.defaultHeaders;
 
+        const valami = JSON.parse(localStorage.getItem('user')!)
+
+        headers = this.defaultHeaders;
+
+        headers = headers.set('Authorization', `${valami.token}`);
+
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -431,7 +437,11 @@ export class ShoppingListControllerService {
     public markItemsAsPurchased(body?: Array<number>, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
 
 
+        const valami = JSON.parse(localStorage.getItem('user')!)
+
         let headers = this.defaultHeaders;
+
+        headers = headers.set('Authorization', `${valami.token}`);
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -530,7 +540,12 @@ export class ShoppingListControllerService {
             throw new Error('Required parameter body was null or undefined when calling updateShoppingList.');
         }
 
+        const valami = JSON.parse(localStorage.getItem('user')!)
+
         let headers = this.defaultHeaders;
+
+        headers = headers.set('Authorization', `${valami.token}`);
+
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -577,7 +592,12 @@ export class ShoppingListControllerService {
             throw new Error('Required parameter id was null or undefined when calling updateShoppingList1.');
         }
 
+        const valami = JSON.parse(localStorage.getItem('user')!)
+
         let headers = this.defaultHeaders;
+
+        headers = headers.set('Authorization', `${valami.token}`);
+
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
