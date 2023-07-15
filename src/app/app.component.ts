@@ -35,8 +35,6 @@ export class AppComponent {
   public isCollapsed = true;
 
   constructor(private router: Router, public accountService: AccountService, private navigationSerivce: NavigationButtonService, private _formBuilder: FormBuilder) {
-    //localStorage.removeItem('user');
-    //this.router.navigate(['/']);
     this.accountService.showShoppingListManagement$.subscribe(data => {
       this.user = data;
       if (this.accountService.userValue) {

@@ -5,7 +5,7 @@
         <mat-icon>lists</mat-icon>
         actual shopping lists
     </button>
-    <button mat-button class="example-icon" (click)="onButtonClick('history')">
+    <button mat-button class="example-icon" #tooltip="matTooltip" matTooltip="Already paid lists." matTooltipPosition="below" (click)="onButtonClick('history')">
         <mat-icon>history</mat-icon>
         history
     </button>

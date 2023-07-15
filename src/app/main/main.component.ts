@@ -4,7 +4,6 @@ import { NavigationButtonService } from '../service/navigation-button.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ErrorDialogComponent } from '../errors/error-dialog/error-dialog.component';
 import { AddListComponent } from './newlist/add-list/add-list.component';
-import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-main',
@@ -19,6 +18,9 @@ export class MainComponent {
   constructor(private service: ShoppingListControllerService, private navigationService: NavigationButtonService, private dialog: MatDialog) {
     this.service.getShoppingLists().subscribe(data => {
       for (let i = 0; i < data.length; i++) {
+        if (data[i].paid! == true)
+          continue
+
         this.lists.push(data[i])
         console.log(data[i]);
       }
@@ -106,6 +108,13 @@ export class MainComponent {
 
   deleteList(list: ShoppingList) {
     this.service.deleteShoppingList(list.id!).subscribe(() => {
+      this.lists = this.lists.filter(_list => _list !== list);
+    })
+  }
+
+  markListAsPaid(list: ShoppingList) {
+    list.paid = true;
+    this.service.updateShoppingList(list).subscribe(() => {
       this.lists = this.lists.filter(_list => _list !== list);
     })
   }
