@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MainComponent } from './main/main.component';
 
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar'
@@ -29,7 +28,6 @@ import { ShoppingListGridComponent } from './main/shopping-list-grid/shopping-li
 @NgModule({
   declarations: [
     AppComponent,
-    MainComponent,
     AddListComponent,
     ItemInputComponent,
     ShoppingListGridComponent,
