@@ -1,0 +1,33 @@
+<mat-list role="list" *ngFor="let x of list.items">
+    <mat-list-item role="listitem">
+        <div class="list-item-container">
+            <div class="name-container">
+                <span #tooltip="matTooltip" matTooltip="{{ x.name }}"
+                    matTooltipPosition="above">{{x.name }}</span>
+            </div>
+            <div class="details-container" *ngIf="list.paid">
+                <div class="quantity">
+                    <p>{{ x.quantity }}</p>
+                </div>
+            </div>
+            <div class="details-container" *ngIf="!list.paid">
+                <div class="quantity">
+                    <button mat-icon-button (click)="decrementQuantity(x)">
+                        <mat-icon>remove</mat-icon>
+                    </button>
+                    <p>{{ x.quantity }}</p>
+                    <button mat-icon-button (click)="incrementQuantity(x)">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </div>
+                <div class="checkbox-container">
+                    <mat-checkbox [(ngModel)]="x.purchased"></mat-checkbox>
+                </div>
+                <div><button mat-icon-button (click)="deleteItem(list, x)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </mat-list-item>
+</mat-list>

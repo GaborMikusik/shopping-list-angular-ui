@@ -1,0 +1,11 @@
+<mat-card class="card">
+    <mat-card-header class="card-header card card-header-container">
+        <app-actions-menu [list]="list"></app-actions-menu>
+        <mat-card-title>{{ list.name }}</mat-card-title>
+        <mat-card-subtitle class="card-header-subtitle">{{ list.description }}</mat-card-subtitle>
+    </mat-card-header>
+    <app-shopping-list-card-content [list]="list"></app-shopping-list-card-content>
+    <mat-card-footer>
+        <mat-hint class="footer">Updated: {{ list.updatedAt }}</mat-hint>
+    </mat-card-footer>
+</mat-card>

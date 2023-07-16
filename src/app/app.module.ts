@@ -19,12 +19,24 @@ import { MaterialExampleModule } from './material.module';
 import { ApiModule } from './api';
 import { HttpClientModule } from '@angular/common/http';
 import { AddListComponent } from './main/newlist/add-list/add-list.component';
+import { ItemInputComponent } from './main/item-input/item-input.component';
+import { ShoppingListItemsComponent } from './main/shopping-list-items/shopping-list-items.component';
+import { ActionsMenuComponent } from './main/actions-menu/actions-menu.component';
+import { ShoppingListCardContentComponent } from './main/shopping-list-card-content/shopping-list-card-content.component';
+import { ShoppingListCardComponent } from './main/shopping-list-card/shopping-list-card.component';
+import { ShoppingListGridComponent } from './main/shopping-list-grid/shopping-list-grid.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainComponent,
-    AddListComponent
+    AddListComponent,
+    ItemInputComponent,
+    ShoppingListGridComponent,
+    ActionsMenuComponent,
+    ShoppingListCardComponent,
+    ShoppingListCardContentComponent,
+    ShoppingListItemsComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,24 @@
+.card {
+    border-radius: 5px;
+}
+
+.card-header {
+    margin-bottom: 5px;
+    background: #3f51b5;
+    color: #fff;
+}
+
+.card-header-subtitle {
+    margin-bottom: 5px;
+    color: #fff;
+}
+
+.card-header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer {
+    margin: 10px;
+}

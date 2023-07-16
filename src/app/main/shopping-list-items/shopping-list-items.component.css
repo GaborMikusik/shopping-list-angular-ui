@@ -1,0 +1,33 @@
+.list-item-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 450px;
+}
+
+.name-container {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.details-container {
+    display: flex;
+    align-items: center;
+}
+
+.quantity {
+    margin-right: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.quantity p {
+    margin: 0;
+    /* Remove default margins for <p> element */
+}
+
+.quantity-input {
+    width: 30px;
+}

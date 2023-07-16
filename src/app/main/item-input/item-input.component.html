@@ -1,0 +1,7 @@
+<mat-form-field class="example-form-field" appearance="outline" *ngIf="!list.paid">
+    <mat-label>Enter item name</mat-label>
+    <input matInput type="text" [(ngModel)]="itemName">
+    <button *ngIf="itemName" matSuffix mat-icon-button aria-label="Clear" (click)="addNewItem(list)">
+        <mat-icon>add</mat-icon>
+    </button>
+</mat-form-field>

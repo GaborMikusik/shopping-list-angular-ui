@@ -1,0 +1,10 @@
+.expansion-panel {
+    outline: none;
+    box-shadow: none;
+}
+
+
+.scrollable-content {
+    max-height: 300px;
+    overflow: auto;
+}

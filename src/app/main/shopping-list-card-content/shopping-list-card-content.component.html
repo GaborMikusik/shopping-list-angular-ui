@@ -1,0 +1,12 @@
+<mat-card-content class="scrollable-content">
+    <div></div>
+    <mat-expansion-panel class="expansion-panel">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Groceries
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <app-shopping-list-items [list]="list"></app-shopping-list-items>
+        <app-item-input [list]="list"></app-item-input>
+    </mat-expansion-panel>
+</mat-card-content>

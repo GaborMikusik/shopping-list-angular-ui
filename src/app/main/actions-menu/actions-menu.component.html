@@ -1,0 +1,18 @@
+<button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu" *ngIf="!list.paid">
+    <mat-icon>more_vert</mat-icon>
+</button>
+<mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="saveList(list)">
+        <mat-icon>cloud_upload</mat-icon>
+        <span>Save</span>
+    </button>
+    <button mat-menu-item #tooltip="matTooltip" matTooltip="Mark list as paid." matTooltipPosition="right"
+        (click)="markListAsPaid(list)">
+        <mat-icon>done</mat-icon>
+        <span>Done</span>
+    </button>
+    <button mat-menu-item (click)="deleteList(list)">
+        <mat-icon>delete</mat-icon>
+        <span>Delete</span>
+    </button>
+</mat-menu>

@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MainComponent } from './main.component';
+import { ItemInputComponent } from './item-input.component';
 
-describe('MainComponent', () => {
-  let component: MainComponent;
-  let fixture: ComponentFixture<MainComponent>;
+describe('ItemInputComponent', () => {
+  let component: ItemInputComponent;
+  let fixture: ComponentFixture<ItemInputComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [MainComponent]
+      declarations: [ItemInputComponent]
     });
-    fixture = TestBed.createComponent(MainComponent);
+    fixture = TestBed.createComponent(ItemInputComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
