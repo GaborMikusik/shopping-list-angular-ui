@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ShoppingList } from 'src/app/api';
 
 @Component({
@@ -8,4 +8,15 @@ import { ShoppingList } from 'src/app/api';
 })
 export class ShoppingListCardComponent {
   @Input() list: ShoppingList;
+  @Output() saveListEmitter: EventEmitter<ShoppingList> = new EventEmitter<ShoppingList>();
+  @Output() markListAsPaidEmitter: EventEmitter<ShoppingList> = new EventEmitter<ShoppingList>();
+  @Output() deleteListEmitter: EventEmitter<ShoppingList> = new EventEmitter<ShoppingList>();
+
+  handleMarkListAsPaid(list: ShoppingList): void {
+    this.markListAsPaidEmitter.emit(list);
+  }
+
+  handleDeleteList(list: ShoppingList): void {
+    this.deleteListEmitter.emit(list);
+  }
 }

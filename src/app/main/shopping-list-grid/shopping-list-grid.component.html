@@ -1,6 +1,6 @@
 <mat-grid-list cols="3">
     <mat-grid-tile *ngFor="let list of lists">
-        <app-shopping-list-card [list]="list" (markListAsPaid$)="handleMarkListAsPaid(list)"
-            (deleteList$)="handleDeleteList(list)"></app-shopping-list-card>
+        <app-shopping-list-card [list]="list" (markListAsPaidEmitter)="handleMarkListAsPaid(list)"
+            (deleteListEmitter)="handleDeleteList(list)"></app-shopping-list-card>
     </mat-grid-tile>
 </mat-grid-list>

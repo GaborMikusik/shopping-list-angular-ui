@@ -1,6 +1,7 @@
 <mat-card class="card">
     <mat-card-header class="card-header card card-header-container">
-        <app-actions-menu [list]="list"></app-actions-menu>
+        <app-actions-menu [list]="list" (markListAsPaidEmitter)="handleMarkListAsPaid(list)"
+            (deleteListEmitter)="handleDeleteList(list)"></app-actions-menu>
         <mat-card-title>{{ list.name }}</mat-card-title>
         <mat-card-subtitle class="card-header-subtitle">{{ list.description }}</mat-card-subtitle>
     </mat-card-header>

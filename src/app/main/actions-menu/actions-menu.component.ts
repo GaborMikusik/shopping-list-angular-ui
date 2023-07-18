@@ -9,9 +9,8 @@ import { ShoppingList, ShoppingListControllerService } from 'src/app/api';
 export class ActionsMenuComponent {
   //@Input() lists: ShoppingList[];
   @Input() list: ShoppingList;
-  @Output() saveList$: EventEmitter<ShoppingList> = new EventEmitter<ShoppingList>();
-  @Output() markListAsPaid$: EventEmitter<ShoppingList> = new EventEmitter<ShoppingList>();
-  @Output() deleteList$: EventEmitter<ShoppingList> = new EventEmitter<ShoppingList>();
+  @Output() markListAsPaidEmitter: EventEmitter<ShoppingList> = new EventEmitter<ShoppingList>();
+  @Output() deleteListEmitter: EventEmitter<ShoppingList> = new EventEmitter<ShoppingList>();
 
 
   constructor(private service: ShoppingListControllerService) { }
@@ -24,27 +23,14 @@ export class ActionsMenuComponent {
 
   markListAsPaid(list: ShoppingList) {
     list.paid = true;
-    list.items = list.items!.filter(_item => _item.purchased)
     this.service.updateShoppingList(list).subscribe(() => {
-      this.onMarkListAsPaid()//this.lists = this.lists.filter(_list => _list !== list);
+      this.markListAsPaidEmitter.emit(this.list);
     })
   }
 
   deleteList(list: ShoppingList) {
     this.service.deleteShoppingList(list.id!).subscribe(() => {
-      this.onDeleteList()//this.lists = this.lists.filter(_list => _list !== list);
+      this.deleteListEmitter.emit(this.list);
     })
-  }
-
-  onSaveList(): void {
-    this.saveList$.emit(this.list);
-  }
-
-  onMarkListAsPaid(): void {
-    this.markListAsPaid$.emit(this.list);
-  }
-
-  onDeleteList(): void {
-    this.deleteList$.emit(this.list);
   }
 }

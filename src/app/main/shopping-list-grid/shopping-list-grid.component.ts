@@ -21,7 +21,6 @@ export class ShoppingListGridComponent {
           continue
 
         this.lists.push(data[i])
-        console.log(data[i]);
       }
     })
   }
@@ -34,7 +33,6 @@ export class ShoppingListGridComponent {
 
   handleButtonClick(buttonName: string) {
     if (buttonName === 'actualLists') {
-      console.log('actualLists');
       this.service.getActualShoppingLists().subscribe(data => {
         this.lists = []
         for (let i = 0; i < data.length; i++) {
@@ -50,14 +48,12 @@ export class ShoppingListGridComponent {
         this.lists = []
         for (let i = 0; i < data.length; i++) {
           this.lists.push(data[i])
-          console.log(data[i]);
         }
       })
       return
     }
 
     if (buttonName === 'newList') {
-      console.log('Button clicked: newList')
       this.dialogRef = this.dialog.open(AddListComponent, {});
       this.dialogRef.afterClosed().subscribe((result: ShoppingList) => {
         this.lists.push(result)
