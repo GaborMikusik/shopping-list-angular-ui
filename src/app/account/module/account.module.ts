@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MaterialExampleModule } from 'src/app/material.module';
 import { ErrorDialogComponent } from 'src/app/errors/error-dialog/error-dialog.component';
 import { SignInFormComponent } from '../signin/sign-in-form/sign-in-form.component';
+import { SignUpFormComponent } from '../signup/sign-up-form/sign-up-form.component';
 
 @NgModule({
   imports: [
@@ -30,6 +31,7 @@ import { SignInFormComponent } from '../signin/sign-in-form/sign-in-form.compone
     SigninComponent,
     SignInFormComponent,
     SignupComponent,
+    SignUpFormComponent,
     ErrorDialogComponent
   ]
 })

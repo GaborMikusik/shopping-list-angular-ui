@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AccountService } from '../../service/account.service';
 import { AuthControllerService } from 'src/app/api';
-import { ErrorDialogComponent } from 'src/app/errors/error-dialog/error-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
 import { ErrorService } from 'src/app/errors/error.service';
 
 @Component({
