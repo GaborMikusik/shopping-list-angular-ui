@@ -24,6 +24,7 @@ import { ActionsMenuComponent } from './main/actions-menu/actions-menu.component
 import { ShoppingListCardContentComponent } from './main/shopping-list-card-content/shopping-list-card-content.component';
 import { ShoppingListCardComponent } from './main/shopping-list-card/shopping-list-card.component';
 import { ShoppingListGridComponent } from './main/shopping-list-grid/shopping-list-grid.component';
+import { ErrorService } from './errors/error.service';
 
 @NgModule({
   declarations: [
@@ -52,14 +53,13 @@ import { ShoppingListGridComponent } from './main/shopping-list-grid/shopping-li
     MatToolbarModule,
     MatIconModule,
     MatListModule,
-    FlexLayoutModule
-    ,
+    FlexLayoutModule,
     MatFormFieldModule,
     MatSelectModule,
     MatToolbarModule,
     MatIconModule
   ],
-  providers: [],
+  providers: [ErrorService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

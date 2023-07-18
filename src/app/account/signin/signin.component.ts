@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AccountService } from '../../service/account.service';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthControllerService } from 'src/app/api';
 import { ErrorDialogComponent } from 'src/app/errors/error-dialog/error-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { ErrorService } from 'src/app/errors/error.service';
 
 @Component({
   selector: 'app-signin',
@@ -12,77 +12,37 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./signin.component.css']
 })
 export class SigninComponent {
-  username?: string;
-  email?: string
-  password: string;
-  form: FormGroup;
-  hide = true
-  emailfield = new FormControl('', [Validators.required, Validators.email]);
+  constructor(
+    private router: Router,
+    private accountService: AccountService,
+    private authControllerService: AuthControllerService,
+    private errorService: ErrorService
+  ) { }
 
-  constructor(private router: Router, private accountService: AccountService, private authControllerService: AuthControllerService, private fb: FormBuilder, private dialog: MatDialog) { }
-
-  ngOnInit() {
-    this.form = this.fb.group({
-      username: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
-    });
-  }
-
-  signIn() {
-    const usernameOrEmail = this.form.value.username === "" ? this.form.value.email : this.form.value.username;
+  signIn(formData: any) {
+    const usernameOrEmail = formData.username === '' ? formData.email : formData.username;
     this.authControllerService.authenticateUser({
       usernameOrEmail: usernameOrEmail,
-      password: this.form.value.password
-    }).subscribe(data => {
-      const user = {
-        username: this.form.value.username,
-        email: this.form.value.email,
-        password: this.form.value.password,
-        token: data.tokenType + ' ' + data.accessToken
-      }
-      localStorage.setItem('user', JSON.stringify(user));
-      this.accountService.showManagement({
-        username: this.form.value.username,
-        email: this.form.value.email,
-        password: this.form.value.password
-      })
-      this.router.navigate(['/']);
-    },
+      password: formData.password,
+    }).subscribe(
+      (data) => {
+        const user = {
+          username: formData.username,
+          email: formData.email,
+          password: formData.password,
+          token: data.tokenType + ' ' + data.accessToken
+        };
+        localStorage.setItem('user', JSON.stringify(user));
+        this.accountService.showManagement(user);
+        this.router.navigate(['/']);
+      },
       (error: any) => {
-        this.dialog.open(ErrorDialogComponent, {
-          data: {
-            status: error.error.status,
-            message: error.error.message,
-            errors: ['Username, email address or password is incorrect']
-          },
-        });
-      })
+        this.errorService.handleErrors(error);
+      }
+    );
   }
 
   signUp() {
     this.router.navigate(['/account/signup']);
   }
-
-  isUsernameValid(): boolean {
-    return this.form.get('username')!.valid;
-  }
-
-  isEmailValid(): boolean {
-    return this.form.get('email')!.valid
-  }
-
-  isPasswordValid(): boolean {
-    return this.form.get('password')!.valid
-  }
-
-  getErrorMessage() {
-    if (this.emailfield.hasError('required')) {
-      return 'You must enter a value';
-    }
-
-    return this.emailfield.hasError('email') ? 'Not a valid email' : '';
-  }
-
 }
-

@@ -7,8 +7,8 @@ import { SigninComponent } from '../signin/signin.component';
 import { SignupComponent } from '../signup/signup.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MaterialExampleModule } from 'src/app/material.module';
-import { ApiModule } from 'src/app/api';
 import { ErrorDialogComponent } from 'src/app/errors/error-dialog/error-dialog.component';
+import { SignInFormComponent } from '../signin/sign-in-form/sign-in-form.component';
 
 @NgModule({
   imports: [
@@ -28,6 +28,7 @@ import { ErrorDialogComponent } from 'src/app/errors/error-dialog/error-dialog.c
   declarations: [
     LayoutComponent,
     SigninComponent,
+    SignInFormComponent,
     SignupComponent,
     ErrorDialogComponent
   ]
