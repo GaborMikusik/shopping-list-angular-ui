@@ -27,12 +27,3 @@ export class AccountService {
   }
 }
 
-class SignupResponse {
-  public success: boolean
-  public message: string
-}
-
-class JwtAuthenticationResponse {
-  public accessToken: string
-  public tokenType: string
-}
