@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ShoppingList, ShoppingListControllerService } from 'src/app/api';
+import { ErrorService } from 'src/app/errors/error.service';
 
 export interface NewListData {
   name: string
@@ -18,7 +19,13 @@ export class AddListComponent {
   description: string
   form: FormGroup;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: NewListData, private service: ShoppingListControllerService, private fb: FormBuilder, private dialogRef: MatDialogRef<AddListComponent>) { }
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: NewListData,
+    private service: ShoppingListControllerService,
+    private fb: FormBuilder,
+    private dialogRef: MatDialogRef<AddListComponent>,
+    private errorService: ErrorService
+  ) { }
 
   ngOnInit() {
     this.form = this.fb.group({
@@ -28,10 +35,12 @@ export class AddListComponent {
   }
 
   addNewList() {
-    this.service.createShoppingList({ name: this.form.value.name, description: this.form.value.description }).subscribe((data: ShoppingList) => {
-      this.dialogRef.close(data)
-    })
-    console.log()
-    console.log(this.form.value.description)
+    this.service.createShoppingList({ name: this.form.value.name, description: this.form.value.description }).subscribe(
+      (data: ShoppingList) => {
+        this.dialogRef.close(data)
+      },
+      (error: any) => {
+        this.errorService.handleErrors(error);
+      })
   }
 }

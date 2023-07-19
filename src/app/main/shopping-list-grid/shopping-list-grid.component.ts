@@ -3,6 +3,7 @@ import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { ShoppingList, ShoppingListControllerService } from 'src/app/api';
 import { NavigationButtonService } from 'src/app/service/navigation-button.service';
 import { AddListComponent } from '../newlist/add-list/add-list.component';
+import { ErrorService } from 'src/app/errors/error.service';
 
 @Component({
   selector: 'app-shopping-list-grid',
@@ -14,15 +15,24 @@ export class ShoppingListGridComponent {
   itemName: string;
   lists: ShoppingList[] = [];
 
-  constructor(private service: ShoppingListControllerService, private navigationService: NavigationButtonService, private dialog: MatDialog) {
-    this.service.getShoppingLists().subscribe(data => {
-      for (let i = 0; i < data.length; i++) {
-        if (data[i].paid! == true)
-          continue
+  constructor(
+    private service: ShoppingListControllerService,
+    private navigationService: NavigationButtonService,
+    private dialog: MatDialog,
+    private errorService: ErrorService
+  ) {
+    this.service.getShoppingLists().subscribe(
+      data => {
+        for (let i = 0; i < data.length; i++) {
+          if (data[i].paid! == true)
+            continue
 
-        this.lists.push(data[i])
-      }
-    })
+          this.lists.push(data[i])
+        }
+      },
+      (error: any) => {
+        this.errorService.handleErrors(error);
+      })
   }
 
   ngOnInit() {
@@ -33,31 +43,43 @@ export class ShoppingListGridComponent {
 
   handleButtonClick(buttonName: string) {
     if (buttonName === 'actualLists') {
-      this.service.getActualShoppingLists().subscribe(data => {
-        this.lists = []
-        for (let i = 0; i < data.length; i++) {
-          this.lists.push(data[i])
-          console.log(data[i]);
-        }
-      })
+      this.service.getActualShoppingLists().subscribe(
+        data => {
+          this.lists = []
+          for (let i = 0; i < data.length; i++) {
+            this.lists.push(data[i])
+            console.log(data[i]);
+          }
+        },
+        (error: any) => {
+          this.errorService.handleErrors(error);
+        })
       return
     }
 
     if (buttonName === 'history') {
-      this.service.getAlreadyPaidShoppingLists().subscribe(data => {
-        this.lists = []
-        for (let i = 0; i < data.length; i++) {
-          this.lists.push(data[i])
-        }
-      })
+      this.service.getAlreadyPaidShoppingLists().subscribe(
+        data => {
+          this.lists = []
+          for (let i = 0; i < data.length; i++) {
+            this.lists.push(data[i])
+          }
+        },
+        (error: any) => {
+          this.errorService.handleErrors(error);
+        })
       return
     }
 
     if (buttonName === 'newList') {
       this.dialogRef = this.dialog.open(AddListComponent, {});
-      this.dialogRef.afterClosed().subscribe((result: ShoppingList) => {
-        this.lists.push(result)
-      });
+      this.dialogRef.afterClosed().subscribe(
+        (result: ShoppingList) => {
+          this.lists.push(result)
+        },
+        (error: any) => {
+          this.errorService.handleErrors(error);
+        });
       return
     }
   }

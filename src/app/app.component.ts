@@ -7,6 +7,7 @@ import { ThemePalette } from '@angular/material/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { FloatLabelType } from '@angular/material/form-field';
 import { NavigationButtonService } from './service/navigation-button.service';
+import { ErrorService } from './errors/error.service';
 
 @Component({
   selector: 'app-root',
@@ -34,15 +35,25 @@ export class AppComponent {
   name = 'Angular';
   public isCollapsed = true;
 
-  constructor(private router: Router, public accountService: AccountService, private navigationSerivce: NavigationButtonService, private _formBuilder: FormBuilder) {
-    this.accountService.showShoppingListManagement$.subscribe(data => {
-      this.user = data;
-      if (this.accountService.userValue) {
-        this.router.navigate(['/']);
-      } else {
-        this.router.navigate(['/account/signin']);
-      }
-    });
+  constructor(
+    private router: Router,
+    public accountService: AccountService,
+    private navigationSerivce: NavigationButtonService,
+    private _formBuilder: FormBuilder,
+    private errorService: ErrorService
+  ) {
+    this.accountService.showShoppingListManagement$.subscribe(
+      data => {
+        this.user = data;
+        if (this.accountService.userValue) {
+          this.router.navigate(['/']);
+        } else {
+          this.router.navigate(['/account/signin']);
+        }
+      },
+      (error: any) => {
+        this.errorService.handleErrors(error);
+      });
   }
 
   onButtonClick(buttonName: string) {
