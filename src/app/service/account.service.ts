@@ -8,12 +8,16 @@ import { Router } from '@angular/router';
 })
 export class AccountService {
   private showShoppingListManagementSubject = new BehaviorSubject<User | null>(JSON.parse(localStorage.getItem('user')!));
-  public showShoppingListManagement$: Observable<User | null> = this.showShoppingListManagementSubject.asObservable();
+  private showShoppingListManagement$: Observable<User | null> = this.showShoppingListManagementSubject.asObservable();
 
   constructor(private router: Router) { }
 
   public get userValue() {
     return this.showShoppingListManagementSubject.value;
+  }
+
+  public get getShowListManagement$(): Observable<User | null> {
+    return this.showShoppingListManagement$;
   }
 
   showManagement(user: User) {

@@ -1,13 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
-import { AccountService } from './service/account.service';
 import { User } from './model/user';
-import { ThemePalette } from '@angular/material/core';
-import { FormBuilder, FormControl } from '@angular/forms';
-import { FloatLabelType } from '@angular/material/form-field';
 import { NavigationButtonService } from './service/navigation-button.service';
 import { ErrorService } from './errors/error.service';
+import { AccountService } from './service/account.service';
 
 @Component({
   selector: 'app-root',
@@ -15,56 +11,40 @@ import { ErrorService } from './errors/error.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  color: ThemePalette = 'accent';
-  checked = false;
-  disabled = false;
-
-  hideRequiredControl = new FormControl(false);
-  floatLabelControl = new FormControl('auto' as FloatLabelType);
-  options = this._formBuilder.group({
-    hideRequired: this.hideRequiredControl,
-    floatLabel: this.floatLabelControl,
-  });
-
-
-  title = 'shopping-list-app';
   user?: User | null;
-  public static staticuser = new BehaviorSubject<boolean>(true);
-
-
-  name = 'Angular';
-  public isCollapsed = true;
 
   constructor(
     private router: Router,
     public accountService: AccountService,
-    private navigationSerivce: NavigationButtonService,
-    private _formBuilder: FormBuilder,
+    private navigationService: NavigationButtonService,
     private errorService: ErrorService
-  ) {
-    this.accountService.showShoppingListManagement$.subscribe(
-      data => {
+  ) { }
+
+  ngOnInit() {
+    this.accountService.getShowListManagement$.subscribe(
+      (data: User | null) => {
         this.user = data;
-        if (this.accountService.userValue) {
-          this.router.navigate(['/']);
-        } else {
-          this.router.navigate(['/account/signin']);
-        }
+        this.handleNavigation();
       },
       (error: any) => {
         this.errorService.handleErrors(error);
-      });
+      }
+    );
+  }
+
+  private handleNavigation() {
+    if (this.accountService.userValue) {
+      this.router.navigate(['/']);
+    } else {
+      this.router.navigate(['/account/signin']);
+    }
   }
 
   onButtonClick(buttonName: string) {
-    this.navigationSerivce.emitButtonClick(buttonName);
+    this.navigationService.emitButtonClick(buttonName);
   }
 
   logout() {
-    this.accountService.logout()
-  }
-
-  getFloatLabelValue(): FloatLabelType {
-    return this.floatLabelControl.value || 'auto';
+    this.accountService.logout();
   }
 }
