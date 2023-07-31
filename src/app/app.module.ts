@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
 
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar'
@@ -25,10 +24,11 @@ import { ShoppingListCardContentComponent } from './main/shopping-list-card-cont
 import { ShoppingListCardComponent } from './main/shopping-list-card/shopping-list-card.component';
 import { ShoppingListGridComponent } from './main/shopping-list-grid/shopping-list-grid.component';
 import { ErrorService } from './errors/error.service';
+import { ListManagementComponent } from './list-management.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
+    ListManagementComponent,
     AddListComponent,
     ItemInputComponent,
     ShoppingListGridComponent,
@@ -60,6 +60,6 @@ import { ErrorService } from './errors/error.service';
     MatIconModule
   ],
   providers: [ErrorService],
-  bootstrap: [AppComponent]
+  bootstrap: [ListManagementComponent]
 })
 export class AppModule { }

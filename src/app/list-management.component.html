@@ -1,0 +1,22 @@
+<mat-toolbar *ngIf="user" color="primary">
+    <span>Shopping List Management</span>
+    <span class="example-spacer"></span>
+    <button mat-button class="example-icon" data-testid="actual-list-button" (click)="onButtonClick('actualLists')">
+        <mat-icon>lists</mat-icon>
+        actual shopping lists
+    </button>
+    <button mat-button class="example-icon" data-testid="history-button" #tooltip="matTooltip"
+        matTooltip="Already paid lists." matTooltipPosition="below" (click)="onButtonClick('history')">
+        <mat-icon>history</mat-icon>
+        history
+    </button>
+    <button mat-button class="example-icon" data-testid="new-list-button" (click)="onButtonClick('newList')">
+        <mat-icon>add</mat-icon>
+        add new list
+    </button>
+    <button mat-button class="example-icon favorite-icon" data-testid="logout-button" (click)='logout()'>
+        <mat-icon>input</mat-icon>
+        logout
+    </button>
+</mat-toolbar>
+<router-outlet></router-outlet>

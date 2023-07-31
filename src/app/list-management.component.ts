@@ -7,10 +7,10 @@ import { AccountService } from './service/account.service';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  templateUrl: './list-management.component.html',
+  styleUrls: ['./list-management.component.css']
 })
-export class AppComponent {
+export class ListManagementComponent {
   user?: User | null;
 
   constructor(
@@ -24,7 +24,7 @@ export class AppComponent {
     this.accountService.getShowListManagement$.subscribe(
       (data: User | null) => {
         this.user = data;
-        this.handleNavigation();
+        this.handleNavigation(data);
       },
       (error: any) => {
         this.errorService.handleErrors(error);
@@ -32,8 +32,8 @@ export class AppComponent {
     );
   }
 
-  private handleNavigation() {
-    if (this.accountService.userValue) {
+  private handleNavigation(user: User | null) {
+    if (user !== null) {
       this.router.navigate(['/']);
     } else {
       this.router.navigate(['/account/signin']);
