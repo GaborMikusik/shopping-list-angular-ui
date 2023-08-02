@@ -1,22 +1,80 @@
 pipeline {
-  agent any
-  stages {
-    stage("build") {
-        steps {
-          echo 'building the application...'
+    agent any
+
+    stages {
+        stage('Install Dependencies') {
+            steps {
+                // Install Node.js and Angular dependencies
+                sh 'npm install'
+            }
+        }
+
+        stage('Lint') {
+            steps {
+                // Run linting checks
+                sh 'npm run lint'
+            }
+        }
+
+        stage('Unit Tests') {
+            steps {
+                // Run unit tests
+                sh 'npm run test'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                // Build the Angular app
+                sh 'npm run build'
+            }
+        }
+
+        stage('Archive') {
+            steps {
+                // Archive the build artifacts (e.g., for deployment)
+                archiveArtifacts artifacts: 'dist/**'
+            }
         }
     }
 
-    stage("test") {
-        steps {
-          echo 'testing the application...'
+    post {
+        always {
+            // Clean up workspace after build
+            cleanWs()
         }
-    }
 
-    stage("deploy") {
-        steps {
-          echo 'deploying the application...'
+        success {
+            // Do something on success (e.g., send notifications)
+            echo 'Build and tests passed successfully!'
+        }
+
+        failure {
+            // Do something on failure (e.g., send notifications)
+            echo 'Build or tests failed!'
         }
     }
-  }
 }
+
+// pipeline {
+//   agent any
+//   stages {
+//     stage("build") {
+//         steps {
+//           echo 'building the application...'
+//         }
+//     }
+
+//     stage("test") {
+//         steps {
+//           echo 'testing the application...'
+//         }
+//     }
+
+//     stage("deploy") {
+//         steps {
+//           echo 'deploying the application...'
+//         }
+//     }
+//   }
+// }
