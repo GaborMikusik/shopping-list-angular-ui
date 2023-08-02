@@ -8,7 +8,6 @@ import { ErrorService } from 'src/app/errors/error.service';
   styleUrls: ['./actions-menu.component.css']
 })
 export class ActionsMenuComponent {
-  //@Input() lists: ShoppingList[];
   @Input() list: ShoppingList;
   @Output() markListAsPaidEmitter: EventEmitter<ShoppingList> = new EventEmitter<ShoppingList>();
   @Output() deleteListEmitter: EventEmitter<ShoppingList> = new EventEmitter<ShoppingList>();
@@ -19,7 +18,7 @@ export class ActionsMenuComponent {
   saveList(list: ShoppingList) {
     this.service.updateShoppingList(list).subscribe(
       data => {
-        list = data;
+        this.list = data;
       },
       (error) => {
         this.errorService.handleErrors(error);

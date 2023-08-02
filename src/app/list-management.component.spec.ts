@@ -2,7 +2,6 @@ import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { ListManagementComponent } from "./list-management.component";
 import { AccountService } from "./service/account.service";
 import { NavigationButtonService } from "./service/navigation-button.service";
-import { ErrorService } from "./errors/error.service";
 import { BehaviorSubject, of } from "rxjs";
 import { MaterialExampleModule } from "./material.module";
 import { Router } from "@angular/router";
@@ -13,8 +12,6 @@ import { By } from "@angular/platform-browser";
 describe('AppComponent', () => {
     let component: ListManagementComponent;
     let fixture: ComponentFixture<ListManagementComponent>;
-    // Declare shared variable
-    let fakeAccountService: AccountService;
     let showListManagementSubject: BehaviorSubject<User | null>;
     let mockRouter: jasmine.SpyObj<Router>;
     let mockNavigationService: jasmine.SpyObj<NavigationButtonService>
@@ -50,7 +47,6 @@ describe('AppComponent', () => {
                 { provide: AccountService, useValue: fakeAccountService },
                 { provide: Router, useValue: routerSpy },
                 { provide: NavigationButtonService, useValue: navigationServiceSpy },
-                // { provide: ErrorService, useValue: fakeErrorService },
             ],
         }).compileComponents();
 
