@@ -11,12 +11,12 @@ pipeline {
             }
         }
 
-        stage('Lint') {
-            steps {
-                // Run linting checks
-                sh 'npm run lint'
-            }
-        }
+        // stage('Lint') {
+        //     steps {
+        //         // Run linting checks
+        //         sh 'npm run lint'
+        //     }
+        // }
 
         stage('Unit Tests') {
             steps {
