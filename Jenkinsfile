@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        docker {
+        dockerContainer {
             image 'a40a8916af1d0d147483767cf87cd2b4a17e048f783bbaf871f0791ad6f04377'
             args '-e CHROME_BIN=/usr/bin/chromium'
         }
