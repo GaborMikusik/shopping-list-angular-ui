@@ -1,14 +1,14 @@
 pipeline {
     agent any
     tools {
-        nodejs "Node.js 18"
+        nodejs 'Node.js 18'
     }
     stages {
         stage('Install Dependencies') {
-            steps {
-                // Install Node.js and Angular dependencies
-                sh 'npm install'
-            }
+      steps {
+        // Install Node.js and Angular dependencies
+        sh 'npm install'
+      }
         }
 
         // stage('Lint') {
@@ -18,42 +18,49 @@ pipeline {
         //     }
         // }
 
-        stage('Unit Tests') {
-            steps {
-                // Run unit tests
-                sh 'npm run test'
+        // stage('Unit Tests') {
+        //     steps {
+        //         // Run unit tests
+        //         sh 'npm run test'
+        //     }
+        // }
+
+        stage('Test') {
+            withEnv(['CHROME_BIN=/usr/bin/chromium-browser']) {
+              sh 'ng test --progress=false --watch false'
             }
+            junit '**/test-results.xml'
         }
 
         stage('Build') {
-            steps {
-                // Build the Angular app
-                sh 'npm run build'
-            }
+      steps {
+        // Build the Angular app
+        sh 'npm run build'
+      }
         }
 
         stage('Archive') {
-            steps {
-                // Archive the build artifacts (e.g., for deployment)
-                archiveArtifacts artifacts: 'dist/**'
-            }
+      steps {
+        // Archive the build artifacts (e.g., for deployment)
+        archiveArtifacts artifacts: 'dist/**'
+      }
         }
     }
 
     post {
         always {
-            // Clean up workspace after build
-            cleanWs()
+      // Clean up workspace after build
+      cleanWs()
         }
 
         success {
-            // Do something on success (e.g., send notifications)
-            echo 'Build and tests passed successfully!'
+      // Do something on success (e.g., send notifications)
+      echo 'Build and tests passed successfully!'
         }
 
         failure {
-            // Do something on failure (e.g., send notifications)
-            echo 'Build or tests failed!'
+      // Do something on failure (e.g., send notifications)
+      echo 'Build or tests failed!'
         }
     }
 }
