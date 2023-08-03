@@ -28,7 +28,7 @@ pipeline {
         stage('Unit Test') {
           steps {
             withEnv(['CHROME_BIN=/usr/bin/chromium-browser']) {
-              sh 'ng test --progress=false --watch false'
+              sh 'npm run test'
             }
             junit '**/test-results.xml'
           }
