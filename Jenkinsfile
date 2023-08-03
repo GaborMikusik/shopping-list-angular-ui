@@ -18,21 +18,21 @@ pipeline {
         //     }
         // }
 
-        // stage('Unit Tests') {
-        //     steps {
-        //         // Run unit tests
-        //         sh 'npm run test'
-        //     }
-        // }
-
-        stage('Unit Test') {
-          steps {
-            withEnv(['CHROME_BIN=/usr/bin/chromium']) {
-              sh 'npm run test -- --browsers ChromeHeadless'
+        stage('Unit Tests') {
+            steps {
+                // Run unit tests using Angular CLI
+                sh 'ng test --watch=false'
             }
-            junit '**/test-results.xml'
-          }
         }
+
+        // stage('Unit Test') {
+        //   steps {
+        //     withEnv(['CHROME_BIN=/usr/bin/chromium']) {
+        //       sh 'npm run test -- --browsers ChromeHeadless'
+        //     }
+        //     junit '**/test-results.xml'
+        //   }
+        // }
 
         stage('Build') {
       steps {
