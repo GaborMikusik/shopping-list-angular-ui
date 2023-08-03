@@ -28,7 +28,7 @@ pipeline {
         stage('Unit Test') {
           steps {
             withEnv(['CHROME_BIN=/usr/bin/chromium']) {
-              sh 'npm run test'
+              sh 'npm run test -- --no-sandbox'
             }
             junit '**/test-results.xml'
           }
