@@ -7,7 +7,7 @@ pipeline {
         stage('Install Dependencies') {
       steps {
         // Install Node.js and Angular dependencies
-        h 'npm install -g @angular/cli'
+        sh 'npm install -g @angular/cli'
         sh 'npm install'
       }
         }
