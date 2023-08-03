@@ -1,10 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'node:18'
-            args '--cap-add=SYS_ADMIN' 
-        }
-    }
+    agent any
     tools {
         nodejs "Node.js 18"
     }
