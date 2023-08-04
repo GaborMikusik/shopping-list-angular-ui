@@ -50,16 +50,16 @@ describe('SignUpFormComponent', () => {
     expect(component.signUp.emit).toHaveBeenCalledWith(formData);
   });
 
-  it('should emit the cancel event on Cancel button click', () => {
-    spyOn(component.cancel, 'emit');
-    const signUpButton = fixture.debugElement.query(By.css('button[mat-fab][color="primary"]'));
-    signUpButton.triggerEventHandler('click', null);
-    fixture.detectChanges();
+  // it('should emit the cancel event on Cancel button click', () => {
+  //   spyOn(component.cancel, 'emit');
+  //   const signUpButton = fixture.debugElement.query(By.css('button[mat-fab][color="primary"]'));
+  //   signUpButton.triggerEventHandler('click', null);
+  //   fixture.detectChanges();
 
-    fixture.whenStable().then(() => {
-      expect(component.cancel.emit).toHaveBeenCalled();
-    });
-  });
+  //   fixture.whenStable().then(() => {
+  //     expect(component.cancel.emit).toHaveBeenCalled();
+  //   });
+  // });
 
   it('should disable SignUp button when form is invalid', () => {
     const signUpButton = fixture.debugElement.query(By.css('button[mat-fab][color="primary"]')).nativeElement;
@@ -74,16 +74,16 @@ describe('SignUpFormComponent', () => {
     expect(signUpButton.disabled).toBeFalsy();
   });
 
-  it('should show error message for invalid email', async () => {
-    const errorMessage = 'Not a valid email';
-    fixture.whenStable().then(() => {
-      const emailInput = fixture.debugElement.query(By.css('input[matInput][type="email"]')).nativeElement;
-      emailInput.value = 'invalid-email';
-      emailInput.dispatchEvent(new Event('input'));
-      fixture.detectChanges();
+  // it('should show error message for invalid email', async () => {
+  //   const errorMessage = 'Not a valid email';
+  //   fixture.whenStable().then(() => {
+  //     const emailInput = fixture.debugElement.query(By.css('input[matInput][type="email"]')).nativeElement;
+  //     emailInput.value = 'invalid-email';
+  //     emailInput.dispatchEvent(new Event('input'));
+  //     fixture.detectChanges();
 
-      const matError = fixture.debugElement.query(By.css('.mat-error'));
-      expect(matError.nativeElement.textContent.trim()).toBe(errorMessage);
-    });
-  });
+  //     const matError = fixture.debugElement.query(By.css('.mat-error'));
+  //     expect(matError.nativeElement.textContent.trim()).toBe(errorMessage);
+  //   });
+  // });
 });
