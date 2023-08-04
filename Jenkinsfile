@@ -1,59 +1,34 @@
 pipeline {
-    agent {
-        dockerContainer {
-            image 'a40a8916af1d0d147483767cf87cd2b4a17e048f783bbaf871f0791ad6f04377'
-            environment {
-                CHROME_BIN = '/usr/bin/chromium'
-            }
-        }
-    }
+    agent any
     tools {
         nodejs 'Node.js 18'
     }
     stages {
         stage('Install Dependencies') {
-      steps {
-        // Install Node.js and Angular dependencies
-        sh 'npm install -g @angular/cli'
-        sh 'npm install'
-      }
+          steps {
+            sh 'npm install -g @angular/cli'
+            sh 'npm install'
+          }
         }
 
-        // stage('Lint') {
-        //     steps {
-        //         // Run linting checks
-        //         sh 'npm run lint'
-        //     }
-        // }
-
         stage('Unit Tests') {
-            steps {
-                // Run unit tests using Angular CLI
-                sh 'ng test --watch=false'
+          steps {
+            sh 'ng test --watch=false --browsers=ChromeHeadlessNoSandbox && echo "hello"'
+                // Optionally, you can also generate JUnit test reports
+                // junit '**/test-results.xml'
             }
         }
 
-        // stage('Unit Test') {
-        //   steps {
-        //     withEnv(['CHROME_BIN=/usr/bin/chromium']) {
-        //       sh 'npm run test -- --browsers ChromeHeadless'
-        //     }
-        //     junit '**/test-results.xml'
-        //   }
-        // }
-
         stage('Build') {
-      steps {
-        // Build the Angular app
-        sh 'npm run build'
-      }
+          steps {
+            sh 'npm run build'
+          }
         }
 
         stage('Archive') {
-      steps {
-        // Archive the build artifacts (e.g., for deployment)
-        archiveArtifacts artifacts: 'dist/**'
-      }
+          steps {
+            archiveArtifacts artifacts: 'dist/**'
+          }
         }
     }
 
@@ -74,26 +49,3 @@ pipeline {
         }
     }
 }
-
-// pipeline {
-//   agent any
-//   stages {
-//     stage("build") {
-//         steps {
-//           echo 'building the application...'
-//         }
-//     }
-
-//     stage("test") {
-//         steps {
-//           echo 'testing the application...'
-//         }
-//     }
-
-//     stage("deploy") {
-//         steps {
-//           echo 'deploying the application...'
-//         }
-//     }
-//   }
-// }
