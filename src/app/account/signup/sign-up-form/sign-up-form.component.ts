@@ -12,7 +12,6 @@ export class SignUpFormComponent {
 
   form: FormGroup;
   hide = true;
-  emailField = new FormControl('', [Validators.required, Validators.email]);
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
@@ -25,10 +24,10 @@ export class SignUpFormComponent {
   }
 
   getErrorMessage() {
-    if (this.emailField.hasError('required')) {
+    if (this.form.get('email')!.hasError('required')) {
       return 'You must enter a value';
     }
-    return this.emailField.hasError('email') ? 'Not a valid email' : '';
+    return this.form.get('email')!.hasError('email') ? 'Not a valid email' : '';
   }
 
   onSubmit() {

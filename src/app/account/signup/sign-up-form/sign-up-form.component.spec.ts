@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SignUpFormComponent } from './sign-up-form.component';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule, FormControl, Validators } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialExampleModule } from 'src/app/material.module';
 import { By } from '@angular/platform-browser';
@@ -44,25 +44,28 @@ describe('SignUpFormComponent', () => {
     };
 
     component.form.setValue(formData);
+
     const formElement = fixture.debugElement.query(By.css('form'));
     formElement.triggerEventHandler('ngSubmit', null);
+
     fixture.detectChanges();
+
     expect(component.signUp.emit).toHaveBeenCalledWith(formData);
   });
 
-  // it('should emit the cancel event on Cancel button click', () => {
-  //   spyOn(component.cancel, 'emit');
-  //   const signUpButton = fixture.debugElement.query(By.css('button[mat-fab][color="primary"]'));
-  //   signUpButton.triggerEventHandler('click', null);
-  //   fixture.detectChanges();
+  it('should emit the cancel event on Cancel button click', () => {
+    spyOn(component.cancel, 'emit');
 
-  //   fixture.whenStable().then(() => {
-  //     expect(component.cancel.emit).toHaveBeenCalled();
-  //   });
-  // });
+    const signUpButton = fixture.debugElement.query(By.css('[data-testid="cancel-button"]'));
+    signUpButton.triggerEventHandler('click', null);
+
+    fixture.detectChanges();
+
+    expect(component.cancel.emit).toHaveBeenCalled();
+  });
 
   it('should disable SignUp button when form is invalid', () => {
-    const signUpButton = fixture.debugElement.query(By.css('button[mat-fab][color="primary"]')).nativeElement;
+    const signUpButton = fixture.debugElement.query(By.css('[data-testid="signup-button"]')).nativeElement;
     expect(signUpButton.disabled).toBeTruthy();
 
     component.form.controls['name'].setValue('testname');
@@ -70,20 +73,53 @@ describe('SignUpFormComponent', () => {
     component.form.controls['email'].setValue('test@example.com');
     component.form.controls['password'].setValue('testpassword');
     component.form.controls['confirmPassword'].setValue('testpassword');
+
     fixture.detectChanges();
+
     expect(signUpButton.disabled).toBeFalsy();
   });
 
-  // it('should show error message for invalid email', async () => {
-  //   const errorMessage = 'Not a valid email';
-  //   fixture.whenStable().then(() => {
-  //     const emailInput = fixture.debugElement.query(By.css('input[matInput][type="email"]')).nativeElement;
-  //     emailInput.value = 'invalid-email';
-  //     emailInput.dispatchEvent(new Event('input'));
-  //     fixture.detectChanges();
+  it('should have an invalid email field for an empty email', () => {
+    const emailControl = component.form.get('email')!;
+    emailControl.setValue('');
+    emailControl.markAsTouched();
 
-  //     const matError = fixture.debugElement.query(By.css('.mat-error'));
-  //     expect(matError.nativeElement.textContent.trim()).toBe(errorMessage);
-  //   });
-  // });
+    fixture.detectChanges();
+
+    expect(emailControl!.invalid).toBeTrue();
+    expect(emailControl!.errors?.hasOwnProperty('required')).toBeTrue();
+  });
+
+  it('should have an invalid email field for an invalid email format', () => {
+    const emailControl = component.form.get('email')!;
+    emailControl.setValue('invalid-email');
+    emailControl.markAsTouched();
+
+    fixture.detectChanges();
+
+    expect(emailControl.invalid).toBeTrue();
+    expect(emailControl.errors?.hasOwnProperty('email')).toBeTrue();
+  });
+
+  it('should display "You must enter a value" error message for an empty email', () => {
+    const emailControl = component.form.get('email')!;
+    emailControl.setValue('');
+    emailControl.markAsTouched();
+
+    fixture.detectChanges();
+
+    const matError = fixture.nativeElement.querySelector('[data-testid="mat-error"]');
+    expect(matError.textContent).toContain('You must enter a value');
+  });
+
+  it('should display "Not a valid email" error message for an invalid email format', () => {
+    const emailControl = component.form.get('email')!;
+    emailControl.setValue('invalid-email');
+    emailControl.markAsTouched();
+
+    fixture.detectChanges();
+
+    const matError = fixture.nativeElement.querySelector('[data-testid="mat-error"]');
+    expect(matError.textContent).toContain('Not a valid email');
+  });
 });
