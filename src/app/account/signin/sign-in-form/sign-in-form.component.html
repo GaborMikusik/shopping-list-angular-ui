@@ -15,8 +15,10 @@
                     <div>
                         <mat-form-field appearance="outline" class="form-field-width">
                             <mat-label>Enter your email</mat-label>
-                            <input matInput placeholder="pat@example.com" formControlName="email" required type="email">
-                            <mat-error *ngIf="form.controls['email'].invalid">{{getErrorMessage()}}</mat-error>
+                            <input matInput data-testid="email-input" placeholder="pat@example.com"
+                                formControlName="email" required type="email">
+                            <mat-error data-testid="mat-error"
+                                *ngIf="form.controls['email'].invalid">{{getErrorMessage()}}</mat-error>
                             <mat-icon matPrefix>email</mat-icon>
                         </mat-form-field>
                     </div>
