@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-signin-form',
@@ -12,6 +12,7 @@ export class SignInFormComponent {
 
   form: FormGroup;
   hide = true;
+  emailField = new FormControl('', [Validators.required, Validators.email]);
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
@@ -22,10 +23,10 @@ export class SignInFormComponent {
   }
 
   getErrorMessage() {
-    if (this.form.get('email')!.hasError('required')) {
+    if (this.emailField.hasError('required')) {
       return 'You must enter a value';
     }
-    return this.form.get('email')!.hasError('email') ? 'Not a valid email' : '';
+    return this.emailField.hasError('email') ? 'Not a valid email' : '';
   }
 
   onSubmit() {

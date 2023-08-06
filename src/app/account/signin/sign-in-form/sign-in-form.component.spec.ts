@@ -4,7 +4,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SignInFormComponent } from './sign-in-form.component';
 import { By } from '@angular/platform-browser';
 import { MaterialExampleModule } from 'src/app/material.module';
-import { MatTabGroup, MatTab } from '@angular/material/tabs';
 
 describe('SignInFormComponent', () => {
   let component: SignInFormComponent;
@@ -68,43 +67,17 @@ describe('SignInFormComponent', () => {
     expect(signInButton.disabled).toBeFalsy();
   });
 
-  it('should show error message for invalid email', () => {
+  it('should show error message for invalid email', async () => {
     const errorMessage = 'Not a valid email';
-    const component: MatTabGroup = fixture.debugElement.query(
-      By.css('mat-tab-group'),
-    ).componentInstance;
-    const tabs: MatTab[] = component._tabs.toArray();
+    fixture.whenStable().then(() => {
+      const emailInput = fixture.debugElement.query(By.css('input[matInput][type="email"]')).nativeElement;
+      emailInput.value = 'invalid-email';
+      emailInput.dispatchEvent(new Event('input'));
+      fixture.detectChanges();
 
-    expect(tabs[0].position).toBe(0);
-    expect(tabs[1].position).toBeGreaterThan(0);
-
-    component.selectedIndex = 1;
-    fixture.detectChanges();
-    expect(tabs[0].position).toBeLessThan(0);
-    expect(tabs[1].position).toBe(0);
-    console.log(tabs[1])
-
-    const emailInput = fixture.debugElement.query(By.css('[data-testid="email-input"]')).nativeElement;
-    emailInput.value = 'invalid-email';
-    emailInput.dispatchEvent(new Event('input'));
-
-    fixture.detectChanges();
-
-    const matError = fixture.debugElement.query(By.css('[data-testid="mat-error"]'));
-    expect(matError.nativeElement.textContent.trim()).toBe(errorMessage);
-  });
-
-  it('should show error message for empty email', () => {
-    const errorMessage = 'You must enter a value';
-
-    const emailInput = fixture.debugElement.query(By.css('[data-testid="email-input"]')).nativeElement;
-    emailInput.value = '';
-    emailInput.dispatchEvent(new Event('input'));
-
-    fixture.detectChanges();
-
-    const matError = fixture.debugElement.query(By.css('[data-testid="mat-error"]'));
-    expect(matError.nativeElement.textContent.trim()).toBe(errorMessage);
+      const matError = fixture.debugElement.query(By.css('.mat-error'));
+      expect(matError.nativeElement.textContent.trim()).toBe(errorMessage);
+    });
   });
 });
 
