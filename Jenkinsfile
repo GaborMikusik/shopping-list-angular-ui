@@ -25,8 +25,7 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh 'pwd'
-                sh "docker build -t shopping-management-image:${env.BUILD_NUMBER} -f ${WORKSPACE}/Dockerfile ${WORKSPACE}"
+                sh "docker build -t shopping-management-image:latest -f ${WORKSPACE}/Dockerfile ${WORKSPACE}"
             }
         }
 
