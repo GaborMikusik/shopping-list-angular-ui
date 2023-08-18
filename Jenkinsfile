@@ -35,7 +35,7 @@ pipeline {
                 sh 'docker stop shopping-management-container || true'
                 sh 'docker rm shopping-management-container || true'
                 // Run a new container with the updated image
-                sh "docker run -d --name shopping-management-container -p 4200:80 shopping-management-image:${env.BUILD_NUMBER}"
+                sh "docker run -d --name shopping-management-container -p 4200:80 shopping-management-image:latest"
             }
         }
 
