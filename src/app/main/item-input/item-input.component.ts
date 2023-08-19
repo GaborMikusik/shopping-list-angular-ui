@@ -14,7 +14,6 @@ export class ItemInputComponent {
   constructor(private service: ShoppingListControllerService, private errorService: ErrorService) { }
 
   addNewItem(list: ShoppingList) {
-    console.log(list.id)
     this.service.addItem({ name: this.itemName, quantity: 1 }, list.id!).subscribe(
       (newList: ShoppingList) => {
         list.items!.push(newList.items![newList.items!.length - 1])

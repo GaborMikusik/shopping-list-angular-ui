@@ -14,7 +14,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialExampleModule } from './material.module';
-import { ApiModule } from './api';
+import { ApiModule, ShoppingListControllerService } from './api';
 import { HttpClientModule } from '@angular/common/http';
 import { AddListComponent } from './main/newlist/add-list/add-list.component';
 import { ItemInputComponent } from './main/item-input/item-input.component';
@@ -59,7 +59,7 @@ import { ListManagementComponent } from './list-management.component';
     MatToolbarModule,
     MatIconModule
   ],
-  providers: [ErrorService],
+  providers: [ErrorService, ShoppingListControllerService],
   bootstrap: [ListManagementComponent]
 })
 export class AppModule { }
